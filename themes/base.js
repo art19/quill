@@ -207,7 +207,7 @@ class BaseTooltip extends Tooltip {
           delete this.linkRange;
         } else {
           this.restoreFocus();
-          this.quill.format('link', value, Emitter.sources.USER);
+          this.quill.format('payment', value, Emitter.sources.USER);
         }
         this.quill.root.scrollTop = scrollTop;
         break;

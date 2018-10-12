@@ -26,7 +26,7 @@ class Emitter extends EventEmitter {
 
   emit() {
     debug.log.apply(debug, arguments);
-    super.emit.apply(this, arguments);
+    super.emit.call(this, ...arguments);
   }
 
   handleDOM(event, ...args) {
