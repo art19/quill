@@ -28,9 +28,16 @@ class SnowTooltipWithPayment extends SnowTooltip {
 
   listen() {
     super.listen();
-    this.root.querySelector('select.format-select').addEventListener('change', ({ currentTarget: { value } }) => {
+    const select = this.root.querySelector('select.format-select');
+    select.addEventListener('change', ({ currentTarget: { value } }) => {
       this.root.setAttribute('data-mode', value);
     });
+    select.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        this.save();
+        event.preventDefault();
+      }
+    })
   }
 
   save() {
