@@ -20,16 +20,21 @@ SnowThemeWithPayment.DEFAULTS = extend(true, {}, SnowTheme.DEFAULTS);
 
 
 class SnowTooltipWithPayment extends SnowTooltip {
+  hide() {
+    const select = this.root.querySelector('select.format-select');
+    select.value = select.querySelector('option').value;
+    super.hide();
+  }
+
   listen() {
     super.listen();
-    this.root.querySelector('select.format-select').addEventListener('change', (({ currentTarget: { value } }) => {
+    this.root.querySelector('select.format-select').addEventListener('change', ({ currentTarget: { value } }) => {
       this.root.setAttribute('data-mode', value);
-    }).bind(this));
+    });
   }
 
   save() {
     let { value  } = this.textbox;
-    const select = this.root.querySelector('select.format-select');
     switch (this.root.getAttribute('data-mode')) {
       case 'payment': {
         const { scrollTop } = this.quill.root;
@@ -51,7 +56,6 @@ class SnowTooltipWithPayment extends SnowTooltip {
     }
     super.save();
     this.textbox.value = '';
-    select.value = select.querySelector('option').value;
     this.hide();
   }
 }
