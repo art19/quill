@@ -18,8 +18,6 @@
     "dist/quill.core.css",
     "dist/quill.js",
     "dist/quill.core.js",
-    "dist/quill.min.js.map",
-    "dist/quill.min.js",
     "core.js",
     "quill.js"
   ],
