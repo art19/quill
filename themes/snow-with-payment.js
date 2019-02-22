@@ -32,7 +32,7 @@ class SnowTooltipWithPayment extends SnowTooltip {
     select.addEventListener('change', ({ currentTarget: { value } }) => {
       this.root.setAttribute('data-mode', value);
     });
-    select.addEventListener('keydown', event => {
+    select.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         this.save();
         event.preventDefault();
@@ -58,6 +58,9 @@ class SnowTooltipWithPayment extends SnowTooltip {
           this.quill.format('payment', value, Emitter.sources.USER);
         }
         this.quill.root.scrollTop = scrollTop;
+        break;
+      }
+      default: {
         break;
       }
     }

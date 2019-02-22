@@ -10669,13 +10669,16 @@ var Payment = function (_Link) {
   _createClass(Payment, null, [{
     key: 'create',
 
+
     /**
      * Static method for creating new Payments from a DOM element
      *
      * @method create
-     * @return {HTMLElement}
+     * @return {HTMLElement} our modified DOM element
+     * @param value a string to use as the anchor
      * @static
      */
+
     value: function create(value) {
       var node = _get(Payment.__proto__ || Object.getPrototypeOf(Payment), 'create', this).call(this, value);
       node.setAttribute('rel', 'payment');
@@ -11751,6 +11754,10 @@ var SnowTooltipWithPayment = function (_SnowTooltip) {
               this.quill.format('payment', value, _emitter2.default.sources.USER);
             }
             this.quill.root.scrollTop = scrollTop;
+            break;
+          }
+        default:
+          {
             break;
           }
       }

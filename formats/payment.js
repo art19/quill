@@ -9,13 +9,16 @@ import Link from '../formats/link';
  * @extends Quill/Link
  */
 class Payment extends Link {
+
   /**
    * Static method for creating new Payments from a DOM element
    *
    * @method create
-   * @return {HTMLElement}
+   * @return {HTMLElement} our modified DOM element
+   * @param value a string to use as the anchor
    * @static
    */
+
   static create(value) {
     const node = super.create(value);
     node.setAttribute('rel', 'payment');
