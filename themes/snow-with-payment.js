@@ -48,14 +48,14 @@ class SnowTooltipWithPayment extends SnowTooltip {
         if (this.linkRange) {
           this.quill.formatText(
             this.linkRange,
-            'payment',
-            value,
+            'link',
+            { href: value, rel: 'payment' },
             Emitter.sources.USER
           );
           delete this.linkRange;
         } else {
           this.restoreFocus();
-          this.quill.format('payment', value, Emitter.sources.USER);
+          this.quill.format('link', { href: value, rel: 'payment' }, Emitter.sources.USER);
         }
         this.quill.root.scrollTop = scrollTop;
         break;

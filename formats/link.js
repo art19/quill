@@ -3,15 +3,33 @@ import Inline from '../blots/inline';
 
 class Link extends Inline {
   static create(value) {
-    let node = super.create(value);
-    value = this.sanitize(value);
-    node.setAttribute('href', value);
+    console.log(value)
+    console.log(value)
+    console.log(value)
+    console.log(value)
+    console.log(value)
+    console.log(value)
+    let href, rel;
+    if (typeof value === 'object') {
+      href = value.href;
+      rel = value.rel;
+    } else {
+      href = value;
+    }
+    let node = super.create(href);
+    href = this.sanitize(href);
+    node.setAttribute('href', href);
     node.setAttribute('target', '_blank');
+    if (typeof value === 'object') {
+      node.setAttribute('rel', rel);
+    }
     return node;
   }
 
   static formats(domNode) {
-    return domNode.getAttribute('href');
+    const rel = domNode.getAttribute('rel');
+    const hasRel = rel !== null;
+    return hasRel ? { href: domNode.getAttribute('href'), rel } : domNode.getAttribute('href');
   }
 
   static sanitize(url) {
