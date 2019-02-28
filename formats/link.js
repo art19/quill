@@ -3,24 +3,16 @@ import Inline from '../blots/inline';
 
 class Link extends Inline {
   static create(value) {
-    console.log(value)
-    console.log(value)
-    console.log(value)
-    console.log(value)
-    console.log(value)
-    console.log(value)
-    let href, rel;
+    let href = value;
+    let rel;
     if (typeof value === 'object') {
-      href = value.href;
-      rel = value.rel;
-    } else {
-      href = value;
+      ({ href, rel } = value);
     }
     let node = super.create(href);
     href = this.sanitize(href);
     node.setAttribute('href', href);
     node.setAttribute('target', '_blank');
-    if (typeof value === 'object') {
+    if (rel) {
       node.setAttribute('rel', rel);
     }
     return node;
