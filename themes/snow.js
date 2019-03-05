@@ -91,8 +91,9 @@ class SnowTooltip extends BaseTooltip {
         if (link != null) {
           this.linkRange = new Range(range.index - offset, link.length());
           let preview = LinkBlot.formats(link.domNode);
-          this.preview.textContent = preview;
-          this.preview.setAttribute('href', preview);
+          const { href = preview } = preview;
+          this.preview.textContent = href;
+          this.preview.setAttribute('href', href);
           this.show();
           this.position(this.quill.getBounds(this.linkRange));
           return;

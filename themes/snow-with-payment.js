@@ -20,18 +20,9 @@ SnowThemeWithPayment.DEFAULTS = extend(true, {}, SnowTheme.DEFAULTS);
 
 
 class SnowTooltipWithPayment extends SnowTooltip {
-  hide() {
-    const select = this.root.querySelector('select.format-select');
-    select.value = select.querySelector('option').value;
-    super.hide();
-  }
-
   listen() {
     super.listen();
     const select = this.root.querySelector('select.format-select');
-    select.addEventListener('change', ({ currentTarget: { value } }) => {
-      this.root.setAttribute('data-mode', value);
-    });
     select.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         this.save();
@@ -42,6 +33,7 @@ class SnowTooltipWithPayment extends SnowTooltip {
 
   save() {
     let { value  } = this.textbox;
+    this.root.setAttribute('data-mode', this.root.querySelector('select.format-select').value);
     switch (this.root.getAttribute('data-mode')) {
       case 'payment': {
         const { scrollTop } = this.quill.root;

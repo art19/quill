@@ -3,11 +3,7 @@ import Inline from '../blots/inline';
 
 class Link extends Inline {
   static create(value) {
-    let href = value;
-    let rel;
-    if (typeof value === 'object') {
-      ({ href, rel } = value);
-    }
+    let { href = value, rel } = value;
     let node = super.create(href);
     href = this.sanitize(href);
     node.setAttribute('href', href);
@@ -19,9 +15,10 @@ class Link extends Inline {
   }
 
   static formats(domNode) {
+    const href = domNode.getAttribute('href');
     const rel = domNode.getAttribute('rel');
     const hasRel = rel !== null;
-    return hasRel ? { href: domNode.getAttribute('href'), rel } : domNode.getAttribute('href');
+    return hasRel ? { href, rel } : href;
   }
 
   static sanitize(url) {
@@ -29,9 +26,15 @@ class Link extends Inline {
   }
 
   format(name, value) {
-    if (name !== this.statics.blotName || !value) return super.format(name, value);
-    value = this.constructor.sanitize(value);
-    this.domNode.setAttribute('href', value);
+    let { href = value, rel  = null } = value;
+    if (rel) {
+      this.domNode.setAttribute('rel', rel);
+    } else {
+      this.domNode.removeAttribute('rel');
+    }
+    if (name !== this.statics.blotName || !href) return super.format(name, href);
+    href = this.constructor.sanitize(href);
+    this.domNode.setAttribute('href', href);
   }
 }
 Link.blotName = 'link';
