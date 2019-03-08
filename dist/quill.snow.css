@@ -946,3 +946,12 @@
 .ql-container.ql-snow {
   border: 1px solid #ccc;
 }
+select.quill--disabled {
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: #ccc;
+  color: #98a5ad;
+}
+select.format-select {
+  margin-left: 5px;
+}

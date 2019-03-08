@@ -5378,6 +5378,9 @@ var Link = function (_Inline) {
       href = this.sanitize(href);
       node.setAttribute('href', href);
       node.setAttribute('target', '_blank');
+      if (rel) {
+        node.setAttribute('rel', rel);
+      }
       return node;
     }
   }, {
@@ -7164,6 +7167,11 @@ var SnowTooltip = function (_BaseTooltip) {
           _this3.save();
         } else {
           _this3.edit('link', _this3.preview.textContent);
+          var select = _this3.root.querySelector('select.format-select');
+          if (select) {
+            select.removeAttribute('disabled');
+            select.classList.remove('quill--disabled');
+          }
         }
         event.preventDefault();
       });
@@ -7189,10 +7197,14 @@ var SnowTooltip = function (_BaseTooltip) {
             _this3.linkRange = new _selection.Range(range.index - offset, link.length());
             var preview = _link2.default.formats(link.domNode);
             var _preview$href = preview.href,
-                href = _preview$href === undefined ? preview : _preview$href;
+                href = _preview$href === undefined ? preview : _preview$href,
+                _preview$rel = preview.rel,
+                rel = _preview$rel === undefined ? null : _preview$rel;
 
             _this3.preview.textContent = href;
             _this3.preview.setAttribute('href', href);
+            var select = _this3.root.querySelector('select.format-select');
+            select.selectedIndex = rel == null ? 0 : 1;
             _this3.show();
             _this3.position(_this3.quill.getBounds(_this3.linkRange));
             return;
@@ -11673,6 +11685,14 @@ var SnowTooltipWithPayment = function (_SnowTooltip) {
       });
     }
   }, {
+    key: 'show',
+    value: function show() {
+      _get(SnowTooltipWithPayment.prototype.__proto__ || Object.getPrototypeOf(SnowTooltipWithPayment.prototype), 'show', this).call(this);
+      var select = this.root.querySelector('select.format-select');
+      select.setAttribute('disabled', true);
+      select.classList.add('quill--disabled');
+    }
+  }, {
     key: 'save',
     value: function save() {
       var value = this.textbox.value;
@@ -11707,7 +11727,7 @@ var SnowTooltipWithPayment = function (_SnowTooltip) {
   return SnowTooltipWithPayment;
 }(_snow.SnowTooltip);
 
-SnowTooltipWithPayment.TEMPLATE = ['<select class="format-select">', '<option value="link">Link</option>', '<option value="payment">Payment</option>', '</select>', '<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
+SnowTooltipWithPayment.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">', '<select class="format-select">', '<option value="link">Link</option>', '<option value="payment">Payment</option>', '</select>', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
 
 exports.SnowTooltipWithPayment = SnowTooltipWithPayment;
 exports.default = SnowThemeWithPayment;
