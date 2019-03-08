@@ -71,6 +71,11 @@ class SnowTooltip extends BaseTooltip {
         this.save();
       } else {
         this.edit('link', this.preview.textContent);
+        const select = this.root.querySelector('select.format-select');
+        if (select) {
+          select.removeAttribute('disabled');
+          select.classList.remove('quill--disabled');
+        }
       }
       event.preventDefault();
     });
@@ -91,9 +96,11 @@ class SnowTooltip extends BaseTooltip {
         if (link != null) {
           this.linkRange = new Range(range.index - offset, link.length());
           let preview = LinkBlot.formats(link.domNode);
-          const { href = preview } = preview;
+          const { href = preview, rel = null } = preview;
           this.preview.textContent = href;
           this.preview.setAttribute('href', href);
+          const select = this.root.querySelector('select.format-select');
+          select.selectedIndex = rel == null ? 0 : 1;
           this.show();
           this.position(this.quill.getBounds(this.linkRange));
           return;
