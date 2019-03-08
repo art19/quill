@@ -3,15 +3,22 @@ import Inline from '../blots/inline';
 
 class Link extends Inline {
   static create(value) {
-    let node = super.create(value);
-    value = this.sanitize(value);
-    node.setAttribute('href', value);
+    let { href = value, rel } = value;
+    let node = super.create(href);
+    href = this.sanitize(href);
+    node.setAttribute('href', href);
     node.setAttribute('target', '_blank');
+    if (rel) {
+      node.setAttribute('rel', rel);
+    }
     return node;
   }
 
   static formats(domNode) {
-    return domNode.getAttribute('href');
+    const href = domNode.getAttribute('href');
+    const rel = domNode.getAttribute('rel');
+    const hasRel = rel !== null;
+    return hasRel ? { href, rel } : href;
   }
 
   static sanitize(url) {
@@ -19,9 +26,15 @@ class Link extends Inline {
   }
 
   format(name, value) {
-    if (name !== this.statics.blotName || !value) return super.format(name, value);
-    value = this.constructor.sanitize(value);
-    this.domNode.setAttribute('href', value);
+    let { href = value, rel  = null } = value;
+    if (rel) {
+      this.domNode.setAttribute('rel', rel);
+    } else {
+      this.domNode.removeAttribute('rel');
+    }
+    if (name !== this.statics.blotName || !href) return super.format(name, href);
+    href = this.constructor.sanitize(href);
+    this.domNode.setAttribute('href', href);
   }
 }
 Link.blotName = 'link';

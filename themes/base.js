@@ -199,6 +199,10 @@ class BaseTooltip extends Tooltip {
 
   save() {
     let value = this.textbox.value;
+    const select = this.root.querySelector('select.format-select');
+    if (select) {
+      this.root.setAttribute('data-mode', select.value);
+    }
     switch(this.root.getAttribute('data-mode')) {
       case 'link': {
         let scrollTop = this.quill.root.scrollTop;
