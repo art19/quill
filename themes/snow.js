@@ -86,6 +86,11 @@ class SnowTooltip extends BaseTooltip {
         this.quill.formatText(range, 'link', false, Emitter.sources.USER);
         delete this.linkRange;
       }
+      const select = this.root.querySelector('select.format-select');
+      if (select) {
+        select.removeAttribute('disabled');
+        select.classList.remove('quill--disabled');
+      }
       event.preventDefault();
       this.hide();
     });

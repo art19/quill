@@ -7182,6 +7182,11 @@ var SnowTooltip = function (_BaseTooltip) {
           _this3.quill.formatText(range, 'link', false, _emitter2.default.sources.USER);
           delete _this3.linkRange;
         }
+        var select = _this3.root.querySelector('select.format-select');
+        if (select) {
+          select.removeAttribute('disabled');
+          select.classList.remove('quill--disabled');
+        }
         event.preventDefault();
         _this3.hide();
       });
