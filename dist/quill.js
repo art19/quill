@@ -5353,19 +5353,26 @@ var Link = function (_Inline) {
   _createClass(Link, [{
     key: 'format',
     value: function format(name, value) {
-      var _value$href = value.href,
-          href = _value$href === undefined ? value : _value$href,
-          _value$rel = value.rel,
-          rel = _value$rel === undefined ? null : _value$rel;
+      if (value) {
+        var _value$href = value.href,
+            href = _value$href === undefined ? value : _value$href,
+            _value$rel = value.rel,
+            rel = _value$rel === undefined ? null : _value$rel;
 
-      if (rel) {
-        this.domNode.setAttribute('rel', rel);
+        if (rel) {
+          this.domNode.setAttribute('rel', rel);
+        } else {
+          this.domNode.removeAttribute('rel');
+        }
+        if (name !== this.statics.blotName || !href) return _get(Link.prototype.__proto__ || Object.getPrototypeOf(Link.prototype), 'format', this).call(this, name, href);
+        href = this.constructor.sanitize(href);
+        this.domNode.setAttribute('href', href);
       } else {
         this.domNode.removeAttribute('rel');
+        if (name !== this.statics.blotName || !value) return _get(Link.prototype.__proto__ || Object.getPrototypeOf(Link.prototype), 'format', this).call(this, name, value);
+        var _href = this.constructor.sanitize(value);
+        this.domNode.setAttribute('href', _href);
       }
-      if (name !== this.statics.blotName || !href) return _get(Link.prototype.__proto__ || Object.getPrototypeOf(Link.prototype), 'format', this).call(this, name, href);
-      href = this.constructor.sanitize(href);
-      this.domNode.setAttribute('href', href);
     }
   }], [{
     key: 'create',
