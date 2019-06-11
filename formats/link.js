@@ -1,6 +1,5 @@
 import Inline from '../blots/inline';
 
-
 class Link extends Inline {
   static create(value) {
     let { href = value, rel } = value;
@@ -26,15 +25,22 @@ class Link extends Inline {
   }
 
   format(name, value) {
-    let { href = value, rel  = null } = value;
-    if (rel) {
-      this.domNode.setAttribute('rel', rel);
+    if (value) {
+      let { href = value, rel = null } = value;
+      if (rel) {
+        this.domNode.setAttribute('rel', rel);
+      } else {
+        this.domNode.removeAttribute('rel');
+      }
+      if (name !== this.statics.blotName || !href) return super.format(name, href);
+      href = this.constructor.sanitize(href);
+      this.domNode.setAttribute('href', href);
     } else {
       this.domNode.removeAttribute('rel');
+      if (name !== this.statics.blotName || !value) return super.format(name, value);
+      let href = this.constructor.sanitize(value);
+      this.domNode.setAttribute('href', href);
     }
-    if (name !== this.statics.blotName || !href) return super.format(name, href);
-    href = this.constructor.sanitize(href);
-    this.domNode.setAttribute('href', href);
   }
 }
 Link.blotName = 'link';
