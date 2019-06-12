@@ -7164,6 +7164,17 @@ var SnowTooltip = function (_BaseTooltip) {
   }
 
   _createClass(SnowTooltip, [{
+    key: 'hide',
+    value: function hide() {
+      _get(SnowTooltip.prototype.__proto__ || Object.getPrototypeOf(SnowTooltip.prototype), 'hide', this).apply(this, arguments);
+      var select = this.root.querySelector('select.format-select');
+      if (select) {
+        select.selectedIndex = 0;
+        select.removeAttribute('disabled');
+        select.classList.remove('quill--disabled');
+      }
+    }
+  }, {
     key: 'listen',
     value: function listen() {
       var _this3 = this;
@@ -7182,6 +7193,7 @@ var SnowTooltip = function (_BaseTooltip) {
         }
         event.preventDefault();
       });
+
       this.root.querySelector('a.ql-remove').addEventListener('click', function (event) {
         if (_this3.linkRange != null) {
           var range = _this3.linkRange;
@@ -7197,6 +7209,7 @@ var SnowTooltip = function (_BaseTooltip) {
         event.preventDefault();
         _this3.hide();
       });
+
       this.quill.on(_emitter2.default.events.SELECTION_CHANGE, function (range, oldRange, source) {
         if (range == null) return;
         if (range.length === 0 && source === _emitter2.default.sources.USER) {
@@ -7216,7 +7229,9 @@ var SnowTooltip = function (_BaseTooltip) {
             _this3.preview.textContent = href;
             _this3.preview.setAttribute('href', href);
             var select = _this3.root.querySelector('select.format-select');
-            select.selectedIndex = rel == null ? 0 : 1;
+            if (select) {
+              select.selectedIndex = rel == null ? 0 : 1;
+            }
             _this3.show();
             _this3.position(_this3.quill.getBounds(_this3.linkRange));
             return;
@@ -7238,7 +7253,7 @@ var SnowTooltip = function (_BaseTooltip) {
   return SnowTooltip;
 }(_base.BaseTooltip);
 
-SnowTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
+SnowTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="https://art19.com" data-video="Embed URL">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
 
 exports.SnowTooltip = SnowTooltip;
 exports.default = SnowTheme;
