@@ -7168,7 +7168,7 @@ var SnowTooltip = function (_BaseTooltip) {
     value: function hide() {
       _get(SnowTooltip.prototype.__proto__ || Object.getPrototypeOf(SnowTooltip.prototype), 'hide', this).apply(this, arguments);
       var select = this.root.querySelector('select.format-select');
-      if (select) {
+      if (!this.root.classList.contains('ql-editing') && select) {
         select.selectedIndex = 0;
         select.removeAttribute('disabled');
         select.classList.remove('quill--disabled');

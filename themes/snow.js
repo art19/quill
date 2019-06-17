@@ -67,7 +67,7 @@ class SnowTooltip extends BaseTooltip {
   hide() {
     super.hide(...arguments);
     const select = this.root.querySelector('select.format-select');
-    if (select) {
+    if (!this.root.classList.contains('ql-editing') && select) {
       select.selectedIndex = 0;
       select.removeAttribute('disabled');
       select.classList.remove('quill--disabled');
